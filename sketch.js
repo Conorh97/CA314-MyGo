@@ -1,4 +1,3 @@
-
 var size = 640;
 var blocks = 5;
 var spacing = size/blocks;
@@ -58,12 +57,40 @@ function mouseClicked(){
 
 }
 
-function Stone(x,y){
+function Point(x,y) {
+	this.x = x;
+	this.y = y;
+}
+
+function getLiberties(s) {
+	if (x + 1 > blocks && y + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x, y - 1)];
+	} else if (x + 1 > blocks && y - 1 < 0) {
+		s.liberties = [Point(x - 1, y), Point(x, y + 1)];
+	} else if (x - 1 < 0 && y + 1 > blocks) {
+		s.liberties = [Point(x + 1, y), Point(x, y - 1)];
+	} else if (x - 1 < 0 && y - 1 < 0) {
+		s.liberties = [Point(x + 1, y), Point(x, y + 1)];
+	} else if (x + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x, y - 1), Point(x, y + 1)];
+	} else if (y + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x + 1, y), Point(x, y - 1)];
+	} else if (x - 1 > blocks) {
+		s.liberties = [Point(x + 1, y), Point(x, y - 1), Point(x, y + 1)];
+	} else if (y - 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x + 1, y), Point(x, y + 1)];
+	} else {
+		s.liberties = [Point(x + 1, y), Point(x - 1, y), Point(x, y + 1), Point(x, y - 1)];
+	}
+}
+
+function Stone(x,y) {
 	this.x = x;
 	this.y = y;
 	this.display = function(){
 		ellipse(this.x, this.y, spacing/2, spacing/2);
 	}
+	getLiberties(this);
 }
 
 function emptyIntersection(x,y){
