@@ -27,6 +27,9 @@ function draw() {
 	var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
+	if (!(emptyIntersection(x,y))){
+		fill(204,0,0);
+	}
 	ellipse(x,y,spacing/4, spacing/4);
 }
 
@@ -74,7 +77,7 @@ function Point(x,y) {
 	this.x = x;
 	this.y = y;
 }
-
+/*
 function getLiberties(s) {
 	if (x + 1 > blocks && y + 1 > blocks) {
 		s.liberties = [Point(x - 1, y), Point(x, y - 1)];
@@ -96,7 +99,7 @@ function getLiberties(s) {
 		s.liberties = [Point(x + 1, y), Point(x - 1, y), Point(x, y + 1), Point(x, y - 1)];
 	}
 }
-
+*/
 function Stone(x,y) {
 	this.x = x;
 	this.y = y;
@@ -114,7 +117,7 @@ function Stone(x,y) {
 		}
 		ellipse(this.x, this.y, spacing/2, spacing/2);
 	}
-	getLiberties(this);
+	//getLiberties(this);
 }
 
 // function to check if the intersection is unoccupied by a stone.
