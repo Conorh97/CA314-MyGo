@@ -23,12 +23,15 @@ function draw() {
 	for (i=0;i<placedStones.length;i++){
 		placedStones[i].display();
 	}
-	fill(102,204,0);
+
+	// green pointer if empty, red pointer if occupied
 	var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
 	if (!(emptyIntersection(x,y))){
 		fill(204,0,0);
+	} else{
+		fill(102,204,0);
 	}
 	ellipse(x,y,spacing/4, spacing/4);
 }
@@ -38,10 +41,8 @@ function mouseClicked(){
   var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
-	console.log(x);
-	console.log(y);
 
-	// adds and displays the stone if the chosen intersection isnt occupied.
+	// adds the stone if the chosen intersection isnt occupied.
 	if (emptyIntersection(x,y)){
 		placedStones[stoneIndex] = new Stone(x,y);
 		stoneIndex+=1;
@@ -51,7 +52,7 @@ function mouseClicked(){
 }
 
 function closestIntersection(){
-	// gets location for nearest intersection to the mouse click.
+	// gets location for nearest intersection to the mouse.
 	var x;
 	var y;
 	var modX = mouseX % spacing;
@@ -103,6 +104,7 @@ function getLiberties(s) {
 function Stone(x,y) {
 	this.x = x;
 	this.y = y;
+	// chooses the colour based on how many turns have occured.
 	if(turn % 2 == 0){
 		this.colour = 1;
 	}else{
