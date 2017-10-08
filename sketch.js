@@ -41,6 +41,7 @@ function mouseClicked(){
   var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
+
 	// adds the stone if the chosen intersection isnt occupied.
 	if (emptyIntersection(x,y)){
 		placedStones[stoneIndex] = new Stone(x,y);
@@ -77,41 +78,29 @@ function Point(x,y) {
 	this.x = x;
 	this.y = y;
 }
-
-Point.prototype.toString = function () {
-    return "(" + this.x + " , " + this.y + ")";
-};
-
-function getBoardEnd() {
-	return padding + boardSize;
-}
-
+/*
 function getLiberties(s) {
-	liberties = [];
-
-	if (s.x == getBoardEnd() && s.y == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y - spacing)];
-	} else if (s.x == getBoardEnd() && s.y == padding) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y + spacing)];
-	} else if (s.x == padding && s.y == getBoardEnd()) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y - spacing)];
-	} else if (s.x == padding && s.y == padding) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y + spacing)];
-	} else if (s.x == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y - spacing), Point(s.x, s.y + spacing)];
-	} else if (s.y == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x + spacing, s.y), Point(s.x, s.y - spacing)];
-	} else if (s.x == padding) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y - spacing), Point(s.x, s.y + spacing)];
-	} else if (s.y == padding) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x + spacing, s.y), Point(s.x, s.y + spacing)];
+	if (x + 1 > blocks && y + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x, y - 1)];
+	} else if (x + 1 > blocks && y - 1 < 0) {
+		s.liberties = [Point(x - 1, y), Point(x, y + 1)];
+	} else if (x - 1 < 0 && y + 1 > blocks) {
+		s.liberties = [Point(x + 1, y), Point(x, y - 1)];
+	} else if (x - 1 < 0 && y - 1 < 0) {
+		s.liberties = [Point(x + 1, y), Point(x, y + 1)];
+	} else if (x + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x, y - 1), Point(x, y + 1)];
+	} else if (y + 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x + 1, y), Point(x, y - 1)];
+	} else if (x - 1 > blocks) {
+		s.liberties = [Point(x + 1, y), Point(x, y - 1), Point(x, y + 1)];
+	} else if (y - 1 > blocks) {
+		s.liberties = [Point(x - 1, y), Point(x + 1, y), Point(x, y + 1)];
 	} else {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x - spacing, s.y), Point(s.x, s.y + spacing), Point(s.x, s.y - spacing)];
+		s.liberties = [Point(x + 1, y), Point(x - 1, y), Point(x, y + 1), Point(x, y - 1)];
 	}
-
-	return liberties;
 }
-
+*/
 function Stone(x,y) {
 	this.x = x;
 	this.y = y;
@@ -130,7 +119,7 @@ function Stone(x,y) {
 		}
 		ellipse(this.x, this.y, spacing/2, spacing/2);
 	}
-	this.liberties = getLiberties(this);
+	//getLiberties(this);
 }
 
 // function to check if the intersection is unoccupied by a stone.
