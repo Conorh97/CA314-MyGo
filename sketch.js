@@ -87,23 +87,23 @@ function getLiberties(s) {
 	liberties = [];
 
 	if (s.x == getBoardEnd() && s.y == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y - spacing)];
+		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y - spacing)];
 	} else if (s.x == getBoardEnd() && s.y == padding) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y + spacing)];
+		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y + spacing)];
 	} else if (s.x == padding && s.y == getBoardEnd()) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y - spacing)];
+		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing)];
 	} else if (s.x == padding && s.y == padding) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y + spacing)];
+		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y + spacing)];
 	} else if (s.x == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x, s.y - spacing), Point(s.x, s.y + spacing)];
+		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y - spacing), new Point(s.x, s.y + spacing)];
 	} else if (s.y == getBoardEnd()) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x + spacing, s.y), Point(s.x, s.y - spacing)];
+		liberties = [new Point(s.x - spacing, s.y), new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing)];
 	} else if (s.x == padding) {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x, s.y - spacing), Point(s.x, s.y + spacing)];
+		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing), new Point(s.x, s.y + spacing)];
 	} else if (s.y == padding) {
-		liberties = [Point(s.x - spacing, s.y), Point(s.x + spacing, s.y), Point(s.x, s.y + spacing)];
+		liberties = [new Point(s.x - spacing, s.y), new Point(s.x + spacing, s.y), new Point(s.x, s.y + spacing)];
 	} else {
-		liberties = [Point(s.x + spacing, s.y), Point(s.x - spacing, s.y), Point(s.x, s.y + spacing), Point(s.x, s.y - spacing)];
+		liberties = [new Point(s.x + spacing, s.y), new Point(s.x - spacing, s.y), new Point(s.x, s.y + spacing), new Point(s.x, s.y - spacing)];
 	}
 
 	return liberties;
