@@ -1,13 +1,25 @@
 var boardSize = 640;
-var blocks = 5;
+var blocks = 9;
 var spacing = boardSize/blocks;
 var turn = 0;
 var padding = 40;
+var grid = [];
 var placedStones = [];
 var stoneIndex = 0;
 
 function setup() {
 	createCanvas(720, 720);
+	makeGrid();
+}
+
+function makeGrid() {
+	for (i = 0; i < blocks + 1; i++) {
+		curr_row = [];
+		for (j = 0; j < blocks + 1; j++) {
+			curr_row.push(0);
+		}
+		grid.push(curr_row);
+	}
 }
 
 function draw() {
@@ -44,7 +56,9 @@ function mouseClicked(){
 
 	// adds the stone if the chosen intersection isnt occupied.
 	if (emptyIntersection(x,y)){
-		placedStones[stoneIndex] = new Stone(x,y);
+		newStone = new Stone(x,y);
+		placedStones[stoneIndex] = newStone;
+		grid[newStone.getGridY()][newStone.getGridX()] = newStone;
 		stoneIndex+=1;
 		turn += 1;
 	}
@@ -83,27 +97,32 @@ function getBoardEnd() {
 	return padding + boardSize;
 }
 
-function getLiberties(s) {
+function getLiberties(x, y) {
 	liberties = [];
 
-	if (s.x == getBoardEnd() && s.y == getBoardEnd()) {
-		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y - spacing)];
-	} else if (s.x == getBoardEnd() && s.y == padding) {
-		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y + spacing)];
-	} else if (s.x == padding && s.y == getBoardEnd()) {
-		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing)];
-	} else if (s.x == padding && s.y == padding) {
-		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y + spacing)];
-	} else if (s.x == getBoardEnd()) {
-		liberties = [new Point(s.x - spacing, s.y), new Point(s.x, s.y - spacing), new Point(s.x, s.y + spacing)];
-	} else if (s.y == getBoardEnd()) {
-		liberties = [new Point(s.x - spacing, s.y), new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing)];
-	} else if (s.x == padding) {
-		liberties = [new Point(s.x + spacing, s.y), new Point(s.x, s.y - spacing), new Point(s.x, s.y + spacing)];
-	} else if (s.y == padding) {
-		liberties = [new Point(s.x - spacing, s.y), new Point(s.x + spacing, s.y), new Point(s.x, s.y + spacing)];
+	if (x == getBoardEnd() && y == getBoardEnd()) {
+		liberties = [[x - spacing, y], [x, y - spacing]];
+	} else if (x == getBoardEnd() && y == padding) {
+		liberties = [[x - spacing, y], [x, y + spacing]];
+	} else if (x == padding && y == getBoardEnd()) {
+		liberties = [[x + spacing, y], [x, y - spacing]];
+	} else if (x == padding && y == padding) {
+		liberties = [[x + spacing, y], [x, y + spacing]];
+	} else if (x == getBoardEnd()) {
+		liberties = [[x - spacing, y], [x, y - spacing], [x, y + spacing]];
+	} else if (y == getBoardEnd()) {
+		liberties = [[x - spacing, y], [x + spacing, y], [x, y - spacing]];
+	} else if (x == padding) {
+		liberties = [[x + spacing, y], [x, y - spacing], [x, y + spacing]];
+	} else if (y == padding) {
+		liberties = [[x - spacing, y], [x + spacing, y], [x, y + spacing]];
 	} else {
-		liberties = [new Point(s.x + spacing, s.y), new Point(s.x - spacing, s.y), new Point(s.x, s.y + spacing), new Point(s.x, s.y - spacing)];
+		liberties = [[x + spacing, y], [x - spacing, y], [x, y + spacing], [x, y - spacing]];
+	}
+
+	for (i = 0; i < liberties.length; i++) {
+		liberties[i][0] = Math.round((liberties[i][0] - padding) / spacing);
+		liberties[i][1] = Math.round((liberties[i][1] - padding) / spacing);
 	}
 
 	return liberties;
@@ -127,7 +146,16 @@ function Stone(x,y) {
 		}
 		ellipse(this.x, this.y, spacing/2, spacing/2);
 	}
-	this.liberties = getLiberties(this);
+
+	this.getGridX = function() {
+		return Math.round((this.x - padding) / spacing);
+	}
+
+	this.getGridY = function() {
+		return Math.round((this.y - padding) / spacing);
+	}
+
+	this.liberties = getLiberties(this.x, this.y);
 }
 
 // function to check if the intersection is unoccupied by a stone.
