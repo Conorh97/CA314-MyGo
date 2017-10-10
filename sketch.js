@@ -56,7 +56,7 @@ function mouseClicked(){
 
 	// adds the stone if the chosen intersection isnt occupied.
 	if (emptyIntersection(x,y)){
-		newStone = new Stone(x,y);
+		newStone = new Stone(x,y,turn);
 		placedStones[stoneIndex] = newStone;
 		grid[newStone.getGridY()][newStone.getGridX()] = newStone;
 		stoneIndex+=1;
@@ -91,71 +91,6 @@ function closestIntersection(){
 function Point(x,y) {
 	this.x = x;
 	this.y = y;
-}
-
-function getBoardEnd() {
-	return padding + boardSize;
-}
-
-function getLiberties(x, y) {
-	liberties = [];
-
-	if (x == getBoardEnd() && y == getBoardEnd()) {
-		liberties = [[x - spacing, y], [x, y - spacing]];
-	} else if (x == getBoardEnd() && y == padding) {
-		liberties = [[x - spacing, y], [x, y + spacing]];
-	} else if (x == padding && y == getBoardEnd()) {
-		liberties = [[x + spacing, y], [x, y - spacing]];
-	} else if (x == padding && y == padding) {
-		liberties = [[x + spacing, y], [x, y + spacing]];
-	} else if (x == getBoardEnd()) {
-		liberties = [[x - spacing, y], [x, y - spacing], [x, y + spacing]];
-	} else if (y == getBoardEnd()) {
-		liberties = [[x - spacing, y], [x + spacing, y], [x, y - spacing]];
-	} else if (x == padding) {
-		liberties = [[x + spacing, y], [x, y - spacing], [x, y + spacing]];
-	} else if (y == padding) {
-		liberties = [[x - spacing, y], [x + spacing, y], [x, y + spacing]];
-	} else {
-		liberties = [[x + spacing, y], [x - spacing, y], [x, y + spacing], [x, y - spacing]];
-	}
-
-	for (i = 0; i < liberties.length; i++) {
-		liberties[i][0] = Math.round((liberties[i][0] - padding) / spacing);
-		liberties[i][1] = Math.round((liberties[i][1] - padding) / spacing);
-	}
-
-	return liberties;
-}
-
-function Stone(x,y) {
-	this.x = x;
-	this.y = y;
-	// chooses the colour based on how many turns have occured.
-	if(turn % 2 == 0){
-		this.colour = 1;
-	}else{
-		this.colour = 0;
-	}
-	this.display = function(){
-		// changes between black/white stones.
-		if(this.colour == 1){
-			fill(0);
-		} else{
-			fill(255);
-		}
-		ellipse(this.x, this.y, spacing/2, spacing/2);
-	}
-
-	this.getGridX = function() {
-		return Math.round((this.x - padding) / spacing);
-	}
-
-	this.getGridY = function() {
-		return Math.round((this.y - padding) / spacing);
-	}
-
-	this.liberties = getLiberties(this.x, this.y);
 }
 
 // function to check if the intersection is unoccupied by a stone.
