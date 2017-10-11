@@ -32,24 +32,24 @@ class Stone{
     this.gridX = this.getGridX();
     this.gridY = this.getGridY();
 
-  	if (this.grid == this.getBoardEnd() && this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.grid - spacing, this.gridY], [this.grid, this.gridY - spacing]];
-  	} else if (this.grid == this.getBoardEnd() && this.gridY == padding) {
-  		this.liberties = [[this.grid - spacing, this.gridY], [this.grid, this.gridY + spacing]];
-  	} else if (this.grid == padding && this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.grid + spacing, this.gridY], [this.grid, this.gridY - spacing]];
-  	} else if (this.grid == padding && this.gridY == padding) {
-  		this.liberties = [[this.grid + spacing, this.gridY], [this.grid, this.gridY + spacing]];
-  	} else if (this.grid == this.getBoardEnd()) {
-  		this.liberties = [[this.grid - spacing, this.gridY], [this.grid, this.gridY - spacing], [this.grid, this.gridY + spacing]];
+  	if (this.gridX== this.getBoardEnd() && this.gridY == this.getBoardEnd()) {
+  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY - spacing]];
+  	} else if (this.gridX== this.getBoardEnd() && this.gridY == padding) {
+  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY + spacing]];
+  	} else if (this.gridX== padding && this.gridY == this.getBoardEnd()) {
+  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing]];
+  	} else if (this.gridX== padding && this.gridY == padding) {
+  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY + spacing]];
+  	} else if (this.gridX== this.getBoardEnd()) {
+  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY - spacing], [this.gridX, this.gridY + spacing]];
   	} else if (this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.grid - spacing, this.gridY], [this.grid + spacing, this.gridY], [this.grid, this.gridY - spacing]];
-  	} else if (this.grid == padding) {
-  		this.liberties = [[this.grid + spacing, this.gridY], [this.grid, this.gridY - spacing], [this.grid, this.gridY + spacing]];
+  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing]];
+  	} else if (this.gridX== padding) {
+  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing], [this.gridX, this.gridY + spacing]];
   	} else if (this.gridY == padding) {
-  		this.liberties = [[this.grid - spacing, this.gridY], [this.grid + spacing, this.gridY], [this.grid, this.gridY + spacing]];
+  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX+ spacing, this.gridY], [this.gridX, this.gridY + spacing]];
   	} else {
-  		this.liberties = [[this.grid + spacing, this.gridY], [this.grid - spacing, this.gridY], [this.grid, this.gridY + spacing], [this.grid, this.gridY - spacing]];
+  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX- spacing, this.gridY], [this.gridX, this.gridY + spacing], [this.gridX, this.gridY - spacing]];
   	}
 
   	for (i = 0; i < this.liberties.length; i++) {
