@@ -48,6 +48,92 @@ function draw() {
 	ellipse(x,y,spacing/4, spacing/4);
 }
 
+function isArrayInArray(source, search) {
+    for (var i = 0, len = source.length; i < len; i++) {
+        if (source[i][0] === search[0] && source[i][1] === search[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function libertyBFS(seen, x, y, colour) {
+	curr_stone = grid[y][x];
+	console.log(curr_stone);
+	if (curr_stone == 0) {
+		return 1;
+	} else if (curr_stone.colour == colour) {
+		//console.log(colour);
+		return 0;
+	} else {
+
+		newSeen = [];
+		notSeenLiberties = [];
+
+		for (i = 0; i < seen.length; i++) {
+			newSeen.push(seen[i]);
+		}
+
+		for (i = 0; i < curr_stone.liberties.length; i++) {
+			console.log(curr_stone.liberties[i]);
+			if (isArrayInArray(seen, curr_stone.liberties[i]) == false) {
+				console.log(curr_stone.liberties[i]);
+				newSeen.push(curr_stone.liberties[i]);
+				notSeenLiberties.push(curr_stone.liberties[i]);
+			}
+		}
+
+		if (notSeenLiberties.length == 0) {
+			return 0;
+		}
+
+		//console.log(newSeen);
+		//console.log(notSeenLiberties);
+		
+		result = 0;
+
+		for (i = 0; i < notSeenLiberties.length; i++) {
+			lib = notSeenLiberties[i];
+			result += (libertyBFS(newSeen, lib[0], lib[1], colour));
+			//console.log(result);
+		}
+
+		//console.log(results);
+		return result
+	}
+}
+
+function mouseClicked(){
+
+    var position = closestIntersection();
+	var x = position[0];
+	var y = position[1];
+
+	// adds the stone if the chosen intersection isnt occupied.
+	if (emptyIntersection(x,y)){
+		newStone = new Stone(x,y,turn);
+		placedStones[stoneIndex] = newStone;
+		grid[newStone.getGridY()][newStone.getGridX()] = newStone;
+		console.log(newStone);
+		for (i = 0; i < newStone.liberties.length; i++) {
+			curr_lib = newStone.liberties[i];
+			grid_spot = grid[curr_lib[1]][curr_lib[0]];
+			if (grid_spot != 0) {
+				if (grid_spot.colour != newStone.colour) {
+					//console.log([[curr_lib[1], curr_lib[0]]]);
+					//console.log(libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour));
+					if (libertyBFS([[curr_lib[1], curr_lib[0]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
+						console.log("Take");
+					}
+				}
+			}
+		} 
+		stoneIndex += 1;
+		turn += 1;
+	}
+
+}
+/*
 function mouseClicked(){
 
   var position = closestIntersection();
@@ -64,7 +150,7 @@ function mouseClicked(){
 	}
 
 }
-
+*/
 function closestIntersection(){
 	// gets location for nearest intersection to the mouse.
 	var x;
