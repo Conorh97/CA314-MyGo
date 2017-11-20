@@ -48,9 +48,58 @@ function draw() {
 	ellipse(x,y,spacing/4, spacing/4);
 }
 
+function isArrayInArray(source, search) {
+	// Checks if 2 element array is in 2D array
+    for (var i = 0, len = source.length; i < len; i++) {
+        if (source[i][0] === search[0] && source[i][1] === search[1]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function libertyBFS(seen, x, y, colour) {
+	// Function to check if stone should be taken
+	curr_stone = grid[y][x];
+
+	if (curr_stone == 0) {
+		return 1;
+	} else if (curr_stone.colour == colour) {
+		return 0;
+	} else {
+
+		newSeen = [];
+		notSeenLiberties = [];
+
+		for (i = 0; i < seen.length; i++) {
+			newSeen.push(seen[i]);
+		}
+
+		for (i = 0; i < curr_stone.liberties.length; i++) {
+			if (isArrayInArray(seen, curr_stone.liberties[i]) == false) {
+				newSeen.push(curr_stone.liberties[i]);
+				notSeenLiberties.push(curr_stone.liberties[i]);
+			}
+		}
+
+		if (notSeenLiberties.length == 0) {
+			return 0;
+		}
+
+		result = 0;
+
+		for (i = 0; i < notSeenLiberties.length; i++) {
+			lib = notSeenLiberties[i];
+			result += (libertyBFS(newSeen, lib[0], lib[1], colour));
+		}
+
+		return result;
+	}
+}
+
 function mouseClicked(){
 
-  var position = closestIntersection();
+    var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
 
@@ -59,7 +108,20 @@ function mouseClicked(){
 		newStone = new Stone(x,y,turn);
 		placedStones[stoneIndex] = newStone;
 		grid[newStone.getGridY()][newStone.getGridX()] = newStone;
-		stoneIndex+=1;
+		// For each new stone, we check its liberties for a stone of opposite colour.
+		// If one exists, we check if if should be taken
+		for (i = 0; i < newStone.liberties.length; i++) {
+			curr_lib = newStone.liberties[i];
+			grid_spot = grid[curr_lib[1]][curr_lib[0]]; // The value at the current liberties coordinates
+			if (grid_spot != 0) {
+				if (grid_spot.colour != newStone.colour) {
+					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
+						console.log("Take");
+					}
+				}
+			}
+		}
+		stoneIndex += 1;
 		turn += 1;
 	}
 
@@ -86,11 +148,6 @@ function closestIntersection(){
 		y+= padding;
 	}
 	return [x,y];
-}
-
-function Point(x,y) {
-	this.x = x;
-	this.y = y;
 }
 
 // function to check if the intersection is unoccupied by a stone.

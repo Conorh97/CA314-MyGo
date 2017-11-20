@@ -8,7 +8,8 @@ class Stone{
   	}else{
   		this.colour = 0;
   	}
-    this.liberties = this.getLiberties();
+
+    this.getLiberties();
   }
   display(){
     if(this.colour == 1){
@@ -28,28 +29,24 @@ class Stone{
     return padding + boardSize;
   }
   getLiberties(){
-
-    this.gridX = this.getGridX();
-    this.gridY = this.getGridY();
-
-  	if (this.gridX== this.getBoardEnd() && this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY - spacing]];
-  	} else if (this.gridX== this.getBoardEnd() && this.gridY == padding) {
-  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY + spacing]];
-  	} else if (this.gridX== padding && this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing]];
-  	} else if (this.gridX== padding && this.gridY == padding) {
-  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY + spacing]];
-  	} else if (this.gridX== this.getBoardEnd()) {
-  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX, this.gridY - spacing], [this.gridX, this.gridY + spacing]];
-  	} else if (this.gridY == this.getBoardEnd()) {
-  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing]];
-  	} else if (this.gridX== padding) {
-  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX, this.gridY - spacing], [this.gridX, this.gridY + spacing]];
-  	} else if (this.gridY == padding) {
-  		this.liberties = [[this.gridX- spacing, this.gridY], [this.gridX+ spacing, this.gridY], [this.gridX, this.gridY + spacing]];
+  	if (this.x == this.getBoardEnd() && this.y == this.getBoardEnd()) {
+  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y - spacing]];
+  	} else if (this.x == this.getBoardEnd() && this.y == padding) {
+  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y + spacing]];
+  	} else if (this.x == padding && this.y == this.getBoardEnd()) {
+  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y - spacing]];
+  	} else if (this.x == padding && this.y == padding) {
+  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y + spacing]];
+  	} else if (this.x == this.getBoardEnd()) {
+  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y - spacing], [this.x , this.y + spacing]];
+  	} else if (this.y == this.getBoardEnd()) {
+  		this.liberties = [[this.x - spacing, this.y], [this.x + spacing, this.y], [this.x , this.y - spacing]];
+  	} else if (this.x == padding) {
+  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y - spacing], [this.x , this.y + spacing]];
+  	} else if (this.y == padding) {
+  		this.liberties = [[this.x - spacing, this.y], [this.x + spacing, this.y], [this.x , this.y + spacing]];
   	} else {
-  		this.liberties = [[this.gridX+ spacing, this.gridY], [this.gridX- spacing, this.gridY], [this.gridX, this.gridY + spacing], [this.gridX, this.gridY - spacing]];
+  		this.liberties = [[this.x + spacing, this.y], [this.x - spacing, this.y], [this.x , this.y + spacing], [this.x , this.y - spacing]];
   	}
 
   	for (i = 0; i < this.liberties.length; i++) {
