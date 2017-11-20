@@ -150,42 +150,6 @@ function closestIntersection(){
 	return [x,y];
 }
 
-function Point(x,y) {
-	this.x = x;
-	this.y = y;
-}
-
-// function to check if the intersection is unoccupied by a stone.
-function emptyIntersection(x,y){
-	for (i=0;i<placedStones.length;i++){
-		if (placedStones[i].x == x && placedStones[i].y == y){
-			return false;
-		}
-	}
-	return true;
-}
-{
-		x = (mouseX - modX) + spacing;
-		x+=padding;
-	} else{
-		x = mouseX - modX;
-		x+= padding;
-	}
-	if(modY>=(spacing/2)+padding){
-		y = (mouseY - modY) + spacing;
-		y += padding;
-	} else{
-		y = mouseY - modY;
-		y+= padding;
-	}
-	return [x,y];
-}
-
-function Point(x,y) {
-	this.x = x;
-	this.y = y;
-}
-
 // function to check if the intersection is unoccupied by a stone.
 function emptyIntersection(x,y){
 	for (i=0;i<placedStones.length;i++){
