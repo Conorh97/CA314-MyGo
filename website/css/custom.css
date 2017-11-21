@@ -25,6 +25,7 @@ body {
     width:20%
 }
 
-label{
-    padding-right: 5px;
+.center_search{
+    margin: 20 auto;
+    width:30%
 }
