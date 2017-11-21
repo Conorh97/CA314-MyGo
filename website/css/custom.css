@@ -11,7 +11,7 @@ body {
 }
 
 .navbar-brand {
-  color: #red;
+  color: #b30000;
   font-size: 45px;
 }
 
@@ -23,4 +23,8 @@ body {
 .center_div{
     margin: 10 auto;
     width:20%
+}
+
+label{
+    padding-right: 5px;
 }
