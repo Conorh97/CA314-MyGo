@@ -6,10 +6,12 @@ var padding = 40;
 var grid = [];
 var placedStones = [];
 var stoneIndex = 0;
+var cnv;
 
 function setup() {
-	createCanvas(720, 720);
+	cnv = createCanvas(720, 720);
 	makeGrid();
+	cnv.parent('canvas');
 }
 
 function makeGrid() {
