@@ -19,3 +19,8 @@ body {
   max-width: 80px;
   max-height: 80px;
 }
+
+.center_div{
+    margin: 10 auto;
+    width:20%
+}
