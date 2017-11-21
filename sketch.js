@@ -32,8 +32,13 @@ function draw() {
 			rect(x*spacing+padding,y*spacing+padding,spacing,spacing);
 		}
 	}
-	for (i=0;i<placedStones.length;i++){
-		placedStones[i].display();
+	for (i=0;i<grid.length;i++){
+		for (j=0;j<grid[i].length;j++){
+			if (grid[i][j] != 0){
+				grid[i][j].display();
+			}
+		}
+		//placedStones[i].display();
 	}
 
 	// green pointer if empty, red pointer if occupied
@@ -85,11 +90,12 @@ function libertyBFS(seen, x, y, colour) {
 		if (notSeenLiberties.length == 0) {
 			return 0;
 		}
-		
+
 		result = 0;
 
 		for (i = 0; i < notSeenLiberties.length; i++) {
 			lib = notSeenLiberties[i];
+			console.log(lib[1],lib[0]);
 			result += (libertyBFS(newSeen, lib[0], lib[1], colour));
 		}
 
@@ -116,11 +122,12 @@ function mouseClicked(){
 			if (grid_spot != 0) {
 				if (grid_spot.colour != newStone.colour) {
 					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
-						console.log("Take");
+						console.log("take");
+						grid[curr_lib[1]][curr_lib[0]] = 0;
 					}
 				}
 			}
-		} 
+		}
 		stoneIndex += 1;
 		turn += 1;
 	}

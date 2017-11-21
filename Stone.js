@@ -8,6 +8,7 @@ class Stone{
   	}else{
   		this.colour = 0;
   	}
+
     this.getLiberties();
   }
   display(){
@@ -28,7 +29,6 @@ class Stone{
     return padding + boardSize;
   }
   getLiberties(){
-
   	if (this.x == this.getBoardEnd() && this.y == this.getBoardEnd()) {
   		this.liberties = [[this.x - spacing, this.y], [this.x , this.y - spacing]];
   	} else if (this.x == this.getBoardEnd() && this.y == padding) {
