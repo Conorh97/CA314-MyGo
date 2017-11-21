@@ -17,41 +17,41 @@ class Stone{
 		} else{
 			fill(255);
 		}
-		ellipse(this.x, this.y, spacing/2, spacing/2);
+		ellipse(this.x, this.y, board.spacing/2, board.spacing/2);
   }
   getGridX(){
-    return Math.round((this.x - padding) / spacing);
+    return Math.round((this.x - board.padding) / board.spacing);
   }
   getGridY(){
-    return Math.round((this.y - padding) / spacing);
+    return Math.round((this.y - board.padding) / board.spacing);
   }
   getBoardEnd(){
-    return padding + boardSize;
+    return board.padding + board.boardSize;
   }
   getLiberties(){
   	if (this.x == this.getBoardEnd() && this.y == this.getBoardEnd()) {
-  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y - spacing]];
-  	} else if (this.x == this.getBoardEnd() && this.y == padding) {
-  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y + spacing]];
-  	} else if (this.x == padding && this.y == this.getBoardEnd()) {
-  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y - spacing]];
-  	} else if (this.x == padding && this.y == padding) {
-  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y + spacing]];
+  		this.liberties = [[this.x - board.spacing, this.y], [this.x , this.y - board.spacing]];
+  	} else if (this.x == this.getBoardEnd() && this.y == board.padding) {
+  		this.liberties = [[this.x - board.spacing, this.y], [this.x , this.y + board.spacing]];
+  	} else if (this.x == board.padding && this.y == this.getBoardEnd()) {
+  		this.liberties = [[this.x + board.spacing, this.y], [this.x , this.y - board.spacing]];
+  	} else if (this.x == board.padding && this.y == board.padding) {
+  		this.liberties = [[this.x + board.spacing, this.y], [this.x , this.y + board.spacing]];
   	} else if (this.x == this.getBoardEnd()) {
-  		this.liberties = [[this.x - spacing, this.y], [this.x , this.y - spacing], [this.x , this.y + spacing]];
+  		this.liberties = [[this.x - board.spacing, this.y], [this.x , this.y - board.spacing], [this.x , this.y + board.spacing]];
   	} else if (this.y == this.getBoardEnd()) {
-  		this.liberties = [[this.x - spacing, this.y], [this.x + spacing, this.y], [this.x , this.y - spacing]];
-  	} else if (this.x == padding) {
-  		this.liberties = [[this.x + spacing, this.y], [this.x , this.y - spacing], [this.x , this.y + spacing]];
-  	} else if (this.y == padding) {
-  		this.liberties = [[this.x - spacing, this.y], [this.x + spacing, this.y], [this.x , this.y + spacing]];
+  		this.liberties = [[this.x - board.spacing, this.y], [this.x + board.spacing, this.y], [this.x , this.y - board.spacing]];
+  	} else if (this.x == board.padding) {
+  		this.liberties = [[this.x + board.spacing, this.y], [this.x , this.y - board.spacing], [this.x , this.y + board.spacing]];
+  	} else if (this.y == board.padding) {
+  		this.liberties = [[this.x - board.spacing, this.y], [this.x + board.spacing, this.y], [this.x , this.y + board.spacing]];
   	} else {
-  		this.liberties = [[this.x + spacing, this.y], [this.x - spacing, this.y], [this.x , this.y + spacing], [this.x , this.y - spacing]];
+  		this.liberties = [[this.x + board.spacing, this.y], [this.x - board.spacing, this.y], [this.x , this.y + board.spacing], [this.x , this.y - board.spacing]];
   	}
 
   	for (i = 0; i < this.liberties.length; i++) {
-  		this.liberties[i][0] = Math.round((this.liberties[i][0] - padding) / spacing);
-  		this.liberties[i][1] = Math.round((this.liberties[i][1] - padding) / spacing);
+  		this.liberties[i][0] = Math.round((this.liberties[i][0] - board.padding) / board.spacing);
+  		this.liberties[i][1] = Math.round((this.liberties[i][1] - board.padding) / board.spacing);
   	}
 
   }

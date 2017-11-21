@@ -8,14 +8,14 @@ class Board {
 		this.makeGrid();
 	}
 
-	addStone (x, y, stone) {
-		this.grid[x][y] = stone;
+	addStone (stone) {
+		this.grid[stone.getGridX()][stone.getGridY()] = stone;
 	}
 
 	makeGrid() {
-		for (i = 0; i < this.blocks + 1; i++) {
-			curr_row = [];
-			for (j = 0; j < this.blocks + 1; j++) {
+		for (var i = 0; i < this.blocks + 1; i++) {
+			var curr_row = [];
+			for (var j = 0; j < this.blocks + 1; j++) {
 				curr_row.push(0);
 			}
 			this.grid.push(curr_row);
@@ -23,8 +23,8 @@ class Board {
 	}
 
 	emptyIntersection(x,y){
-		gridx = Math.round((x - padding) / spacing);
-		gridy = Math.round((y - padding) / spacing);
-		return this.grid[x][y] == 0;
+		var gridx = Math.round((x - this.padding) / this.spacing);
+		var gridy = Math.round((y - this.padding) / this.spacing);
+		return this.grid[gridx][gridy] == 0;
 	}
 }

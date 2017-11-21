@@ -1,26 +1,20 @@
-var boardSize = 640;
-var blocks = 9;
-var spacing = boardSize/blocks;
 var turn = 0;
-var padding = 40;
-var grid = [];
-var placedStones = [];
-var stoneIndex = 0;
 var cnv;
+var board;
 
 function setup() {
 	cnv = createCanvas(720, 720);
-	makeGrid();
 	cnv.parent('canvas');
+	board = new Board(640, 9, 40);
 }
 
 function makeGrid() {
-	for (i = 0; i < blocks + 1; i++) {
+	for (i = 0; i < board.blocks + 1; i++) {
 		curr_row = [];
-		for (j = 0; j < blocks + 1; j++) {
+		for (j = 0; j < board.blocks + 1; j++) {
 			curr_row.push(0);
 		}
-		grid.push(curr_row);
+		board.grid.push(curr_row);
 	}
 }
 
@@ -29,15 +23,15 @@ function draw() {
 	fill(205,175,149);
 	stroke(139,119,101);
 	// initialises the empty board with size blocks * blocks.
-	for(x=0; x<blocks; x++){
-		for (y=0; y<blocks; y++) {
-			rect(x*spacing+padding,y*spacing+padding,spacing,spacing);
+	for(x=0; x<board.blocks; x++){
+		for (y=0; y<board.blocks; y++) {
+			rect(x*board.spacing+board.padding,y*board.spacing+board.padding,board.spacing,board.spacing);
 		}
 	}
-	for (i=0;i<grid.length;i++){
-		for (j=0;j<grid[i].length;j++){
-			if (grid[i][j] != 0){
-				grid[i][j].display();
+	for (i=0;i<board.grid.length;i++){
+		for (j=0;j<board.grid[i].length;j++){
+			if (board.grid[i][j] != 0){
+				board.grid[i][j].display();
 			}
 		}
 		//placedStones[i].display();
@@ -47,12 +41,12 @@ function draw() {
 	var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
-	if (!(emptyIntersection(x,y))){
+	if (!(board.emptyIntersection(x,y))){
 		fill(204,0,0);
 	} else{
 		fill(102,204,0);
 	}
-	ellipse(x,y,spacing/4, spacing/4);
+	ellipse(x,y,board.spacing/4, board.spacing/4);
 }
 
 function isArrayInArray(source, search) {
@@ -67,7 +61,7 @@ function isArrayInArray(source, search) {
 
 function libertyBFS(seen, x, y, colour) {
 	// Function to check if stone should be taken
-	curr_stone = grid[y][x];
+	curr_stone = board.grid[x][y];
 
 	if (curr_stone == 0) {
 		return 1;
@@ -97,7 +91,7 @@ function libertyBFS(seen, x, y, colour) {
 
 		for (i = 0; i < notSeenLiberties.length; i++) {
 			lib = notSeenLiberties[i];
-			console.log(lib[1],lib[0]);
+			console.log(lib[0],lib[1]);
 			result += (libertyBFS(newSeen, lib[0], lib[1], colour));
 		}
 
@@ -112,25 +106,23 @@ function mouseClicked(){
 	var y = position[1];
 
 	// adds the stone if the chosen intersection isnt occupied.
-	if (emptyIntersection(x,y)){
+	if (board.emptyIntersection(x,y)){
 		newStone = new Stone(x,y,turn);
-		placedStones[stoneIndex] = newStone;
-		grid[newStone.getGridY()][newStone.getGridX()] = newStone;
+		board.addStone(newStone);
 		// For each new stone, we check its liberties for a stone of opposite colour.
 		// If one exists, we check if if should be taken
 		for (i = 0; i < newStone.liberties.length; i++) {
 			curr_lib = newStone.liberties[i];
-			grid_spot = grid[curr_lib[1]][curr_lib[0]]; // The value at the current liberties coordinates
+			grid_spot = board.grid[curr_lib[0]][curr_lib[1]]; // The value at the current liberties coordinates
 			if (grid_spot != 0) {
 				if (grid_spot.colour != newStone.colour) {
 					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
 						console.log("take");
-						grid[curr_lib[1]][curr_lib[0]] = 0;
+						board.grid[curr_lib[0]][curr_lib[1]] = 0;
 					}
 				}
 			}
 		}
-		stoneIndex += 1;
 		turn += 1;
 	}
 
@@ -140,31 +132,21 @@ function closestIntersection(){
 	// gets location for nearest intersection to the mouse.
 	var x;
 	var y;
-	var modX = mouseX % spacing;
-	var modY = mouseY % spacing;
-	if(modX>=(spacing/2)+padding){
-		x = (mouseX - modX) + spacing;
-		x+=padding;
+	var modX = mouseX % board.spacing;
+	var modY = mouseY % board.spacing;
+	if(modX>=(board.spacing/2)+board.padding){
+		x = (mouseX - modX) + board.spacing;
+		x+=board.padding;
 	} else{
 		x = mouseX - modX;
-		x+= padding;
+		x+= board.padding;
 	}
-	if(modY>=(spacing/2)+padding){
-		y = (mouseY - modY) + spacing;
-		y += padding;
+	if(modY>=(board.spacing/2)+board.padding){
+		y = (mouseY - modY) + board.spacing;
+		y += board.padding;
 	} else{
 		y = mouseY - modY;
-		y+= padding;
+		y+= board.padding;
 	}
 	return [x,y];
-}
-
-// function to check if the intersection is unoccupied by a stone.
-function emptyIntersection(x,y){
-	for (i=0;i<placedStones.length;i++){
-		if (placedStones[i].x == x && placedStones[i].y == y){
-			return false;
-		}
-	}
-	return true;
 }
