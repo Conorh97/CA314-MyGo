@@ -1,0 +1,21 @@
+body {
+  font-family: 'Nunito', sans-serif;
+}
+
+#navbar-top {
+  background-color: #b30000;
+}
+
+#navbar-bottom {
+  background-color: rgb(239, 247, 255);
+}
+
+.navbar-brand {
+  color: #red;
+  font-size: 45px;
+}
+
+.navbar-brand img {
+  max-width: 80px;
+  max-height: 80px;
+}
