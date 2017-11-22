@@ -44,12 +44,14 @@ function draw() {
 	var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
-	if (!(board.emptyIntersection(x,y))){
-		fill(204,0,0);
-	} else{
-		fill(102,204,0);
+	if (x <= 640 && x >= 0 && y <= 640 && y >= 0) {
+		if (!(board.emptyIntersection(x,y))){
+			fill(204,0,0);
+		} else{
+			fill(102,204,0);
+		}
+		ellipse(x,y,board.spacing/4, board.spacing/4);
 	}
-	ellipse(x,y,board.spacing/4, board.spacing/4);
 }
 
 function isArrayInArray(source, search) {
