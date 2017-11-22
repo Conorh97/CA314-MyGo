@@ -44,7 +44,7 @@ function draw() {
 	var position = closestIntersection();
 	var x = position[0];
 	var y = position[1];
-	if (x <= 640 && x >= 0 && y <= 640 && y >= 0) {
+	if (x <= 690 && x >= 0 && y <= 690 && y >= 0) {
 		if (!(board.emptyIntersection(x,y))){
 			fill(204,0,0);
 		} else{
