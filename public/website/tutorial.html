@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>MyGo - Game</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/custom.css">
+    <link href="https://fonts.googleapis.com/css?family=Carter+One" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand navbar-default" id="navbar-top">
+      <div class="navbar-header">
+        <a class="navbar-brand navbar-left" href="#"><img src="../img/mygo.png" class="img-responsive" onclick="window.location.href='home.html'"/></a>
+        <a class="navbar-brand navbar-left">MyGo</a>
+      </div>
+    </nav>
+    <br>
+    <div class="container" style="border:1px solid black;">
+      <div class = "row">
+        <div class = "col-lg-2"> <h3>Black</h3></div>
+        <div class = "col-lg-8" style=" text-align: center;"><h3>Go Game</h3></div>
+        <div class = "col-lg-2"> <h3>White</h3></div>
+      </div>
+      <div class = "row">
+        <div class = "col-lg-2"> <h3>4</h3></div>
+        <div class = "col-lg-8"></div>
+        <div class = "col-lg-2"> <h3>5</h3></div>
+      </div>
+    </div>
+    <br>
+    <div id="canvas" align=center>
+    <script src="../tutsketch.js"></script>
+    <script src="../Stone.js"></script>
+		<script src="../Board.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.14/p5.js"></script>
+  </body>

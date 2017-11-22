@@ -49,7 +49,7 @@ class Stone{
   		this.liberties = [[this.x + board.spacing, this.y], [this.x - board.spacing, this.y], [this.x , this.y + board.spacing], [this.x , this.y - board.spacing]];
   	}
 
-  	for (i = 0; i < this.liberties.length; i++) {
+  	for (var i = 0; i < this.liberties.length; i++) {
   		this.liberties[i][0] = Math.round((this.liberties[i][0] - board.padding) / board.spacing);
   		this.liberties[i][1] = Math.round((this.liberties[i][1] - board.padding) / board.spacing);
   	}
