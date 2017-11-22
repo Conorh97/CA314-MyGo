@@ -1,5 +1,5 @@
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Carter One', cursive;
 }
 
 #navbar-top {
@@ -10,8 +10,12 @@ body {
   background-color: rgb(239, 247, 255);
 }
 
+.navbar-header {
+  color: white;
+}
+
 .navbar-brand {
-  color: #b30000;
+  color: white;
   font-size: 45px;
 }
 
