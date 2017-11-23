@@ -67,38 +67,41 @@ function isArrayInArray(source, search) {
 
 function libertyBFS(seen, x, y, colour) {
 	// Function to check if stone should be taken
-	curr_stone = board.grid[x][y];
+	var curr_stone = board.grid[x][y];
 
-	if (curr_stone == 0) {
-		return 1;
-	} else if (curr_stone.colour == colour) {
-		return 0;
+	if (curr_stone.colour == colour) { // Case for the edge
+		return seen;
+	} else if (curr_stone == 0) { // Case for the gap
+		return [[-1, -1]];
 	} else {
 
-		newSeen = [];
-		notSeenLiberties = [];
+		var result = [];
+		var newSeen = [];	
+		var notSeenLiberties = [];
 
-		for (i = 0; i < seen.length; i++) {
+		for (var i = 0; i < seen.length; i++) { // Initialising the new list of seen stones with current seen
 			newSeen.push(seen[i]);
 		}
 
-		for (i = 0; i < curr_stone.liberties.length; i++) {
-			if (isArrayInArray(seen, curr_stone.liberties[i]) == false) {
+		for (var i = 0; i < curr_stone.liberties.length; i++) {
+			if (isArrayInArray(seen, curr_stone.liberties[i]) == false) { // Add all new stones to the new seen and the list of strictly new stones
 				newSeen.push(curr_stone.liberties[i]);
 				notSeenLiberties.push(curr_stone.liberties[i]);
 			}
 		}
 
-		if (notSeenLiberties.length == 0) {
-			return 0;
+		if (notSeenLiberties.length == 0) { // Case for no new stones
+			return seen;
 		}
 
-		result = 0;
-
-		for (i = 0; i < notSeenLiberties.length; i++) {
-			lib = notSeenLiberties[i];
-			console.log(lib[0],lib[1]);
-			result += (libertyBFS(newSeen, lib[0], lib[1], colour));
+		for (var i = 0; i < notSeenLiberties.length; i++) { 
+			var lib = notSeenLiberties[i];
+			var curr_result = libertyBFS(newSeen, lib[0], lib[1], colour);
+			for (var j = 0; j < curr_result.length; j++) {
+				if (isArrayInArray(result, curr_result[j]) == false) {
+					result.push(curr_result[j]);
+				}
+			}
 		}
 
 		return result;
@@ -148,10 +151,15 @@ function addAndCheck(stoneX, stoneY){
 			grid_spot = board.grid[curr_lib[0]][curr_lib[1]]; // The value at the current liberties coordinates
 			if (grid_spot != 0) {
 				if (grid_spot.colour != newStone.colour) {
-					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
-						console.log("take");
-						board.grid[curr_lib[0]][curr_lib[1]] = 0;
-						success = true;
+					current_bfs = libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour);
+					if (isArrayInArray(current_bfs, [-1, -1]) == false) { // Determines if the liberties are surrounded
+						for (i = 0; i < current_bfs.length; i++) {
+							curr_bfs_lib = current_bfs[i];
+							curr_stone = board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]];
+							if (curr_stone.colour != newStone.colour) {
+								board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
+							}
+						}	
 					}
 				}
 			}
