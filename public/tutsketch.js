@@ -5,6 +5,7 @@ var alerty = true;
 var success = false;
 var tut;
 var tutSetup;
+var scoreBlack = 0;
 
 function setup() {
 	cnv = createCanvas(720, 720);
@@ -25,34 +26,20 @@ function calcPos(n){
   return Math.round((n * board.spacing) + board.padding);
 }
 
-function makeGrid() {
-	for (i = 0; i < board.blocks + 1; i++) {
-		curr_row = [];
-		for (j = 0; j < board.blocks + 1; j++) {
-			curr_row.push(0);
-		}
-		board.grid.push(curr_row);
-	}
-}
-
 function draw() {
 	background(0);
 	fill(205,175,149);
 	stroke(139,119,101);
+	strokeWeight(2);
 	// initialises the empty board with size blocks * blocks.
-	for(x=0; x<board.blocks; x++){
+	for (x=0; x<board.blocks; x++){
 		for (y=0; y<board.blocks; y++) {
-			rect(x*board.spacing+board.padding,y*board.spacing+board.padding,board.spacing,board.spacing);
+			rect(x* board.spacing + board.padding, y * board.spacing + board.padding, board.spacing, board.spacing);
 		}
 	}
-	for (i=0;i<board.grid.length;i++){
-		for (j=0;j<board.grid[i].length;j++){
-			if (board.grid[i][j] != 0){
-				board.grid[i][j].display();
-			}
-		}
-		//placedStones[i].display();
-	}
+
+	board.display();
+
   if (alerty){
     alert(tutSetup[0]);
     alerty = false;
@@ -77,118 +64,22 @@ function draw() {
 	}
 }
 
-function isArrayInArray(source, search) {
-	// Checks if 2 element array is in 2D array
-    for (var i = 0, len = source.length; i < len; i++) {
-        if (source[i][0] === search[0] && source[i][1] === search[1]) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function libertyBFS(seen, x, y, colour) {
-	// Function to check if stone should be taken
-	var curr_stone = board.grid[x][y];
-
-	if (curr_stone.colour == colour) { // Case for the edge
-		return seen;
-	} else if (curr_stone == 0) { // Case for the gap
-		return [[-1, -1]];
-	} else {
-
-		var result = [];
-		var newSeen = [];
-		var notSeenLiberties = [];
-
-		for (var i = 0; i < seen.length; i++) { // Initialising the new list of seen stones with current seen
-			newSeen.push(seen[i]);
-		}
-
-		for (var i = 0; i < curr_stone.liberties.length; i++) {
-			if (isArrayInArray(seen, curr_stone.liberties[i]) == false) { // Add all new stones to the new seen and the list of strictly new stones
-				newSeen.push(curr_stone.liberties[i]);
-				notSeenLiberties.push(curr_stone.liberties[i]);
-			}
-		}
-
-		if (notSeenLiberties.length == 0) { // Case for no new stones
-			return seen;
-		}
-
-		for (var i = 0; i < notSeenLiberties.length; i++) {
-			var lib = notSeenLiberties[i];
-			var curr_result = libertyBFS(newSeen, lib[0], lib[1], colour);
-			for (var j = 0; j < curr_result.length; j++) {
-				if (isArrayInArray(result, curr_result[j]) == false) {
-					result.push(curr_result[j]);
-				}
-			}
-		}
-
-		return result;
-	}
-}
-
 function mouseClicked(){
 
   var position = closestIntersection();
 	var stoneX = position[0];
 	var stoneY = position[1];
 
-	console.log("sending: " + stoneX + "," + stoneY);
-
-	var data = {
-		x: stoneX,
-		y: stoneY
-	}
-
 	// adds the stone if the chosen intersection isnt occupied.
   if (turn < 1){
-  	addAndCheck(stoneX,stoneY);
+  	board.addAndCheck(stoneX,stoneY);
+		if (board.grid[0][1] != 0 || board.grid[5][2]){
+			success = true;
+		}
   } else {
     alert("Try Again");
     location.reload();
   }
-
-}
-
-function addAndCheck(stoneX, stoneY){
-	if (board.emptyIntersection(stoneX, stoneY)){
-		newStone = new Stone(stoneX,stoneY,turn);
-		board.addStone(newStone);
-		// For each new stone, we check its liberties for a stone of opposite colour.
-		// If one exists, we check if if should be taken
-		for (i = 0; i < newStone.liberties.length; i++) {
-			curr_lib = newStone.liberties[i];
-			grid_spot = board.grid[curr_lib[0]][curr_lib[1]]; // The value at the current liberties coordinates
-			if (grid_spot != 0) {
-				if (grid_spot.colour != newStone.colour) {
-					current_bfs = libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour);
-					if (isArrayInArray(current_bfs, [-1, -1]) == false) { // Determines if the liberties are surrounded
-						for (i = 0; i < current_bfs.length; i++) {
-							curr_bfs_lib = current_bfs[i];
-							curr_stone = board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]];
-							if (curr_stone.colour != newStone.colour) {
-								board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
-								success = true;
-							}
-						}
-					}
-				}
-			}
-		}
-		turn += 1;
-	}
-}
-
-function newMouseClicked(data){
-	var stoneX = data.x;
-	var stoneY = data.y;
-
-	console.log("received: " + stoneX + "," + stoneY);
-
-	addAndCheck(stoneX,stoneY);
 
 }
 
