@@ -8,7 +8,6 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/custom.css">
-    <script src="../js/bootstrap.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Carter+One" rel="stylesheet">
   </head>
   <body>
@@ -21,82 +20,103 @@
     </nav>
     <br>
     <br>
-    <div class = "row">
-      <div class = "col-lg-2"></div>
-      <div class = "col-lg-4" style=" text-align: center;"><h3>Board size</h3></div>
-      <div class = "col-lg-4" style=" text-align: center;">
-        <button type="button" class="btn btn-primaryactive">9x9</button>
-        <button type="button" class="btn">13x13</button>
-        <button type="button" class="btn">19x19</button>
+    <form>
+      <fieldset class="form-group">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4" style=" text-align: center;"><h3>Board Size</h3></div>
+          <div class="col-sm-3" style=" text-align: center;">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="boardsize" id="9x9" value="9x9" checked>
+                9x9
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="boardsize" id="13x13" value="13x13">
+                13x13
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="boardsize" id="19x19" value="19x19">
+                19x19
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4" style=" text-align: center;"><h3>Colour</h3></div>
+          <div class="col-sm-3" style=" text-align: center;">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="colour" id="black" value="black" checked>
+                Black
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="colour" id="white" value="white">
+                White
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <div class="row">
+          <div class="col-sm-2"></div>
+          <div class="col-sm-4" style=" text-align: center;"><h3>Handicap</h3></div>
+          <div class="col-sm-3" style=" text-align: center;">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="0" value="0" checked>
+                0
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="1" value="1">
+                1
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="2" value="2">
+                2
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="3" value="3">
+                3
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="4" value="4">
+                4
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="5" value="5">
+                5
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="6" value="6">
+                6
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="7" value="7">
+                7
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="8" value="8">
+                8
+              </label>
+              <label class="form-check-label">
+                <input class="form-check-input" type="radio" name="handicap" id="9" value="9">
+                9
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <div class="form-group row">
+        <div class = "col-lg-4" style=" text-align: center;"></div>
+        <div class = "col-lg-4" style=" text-align: center;">
+          <button type="submit" class="btn btn-danger">Submit</button>
+        </div>
       </div>
-      <div class = "col-lg-2"></div>
-    </div>
-    <br>
-    <div class = "row">
-      <div class = "col-lg-2"></div>
-      <div class = "col-lg-4" style=" text-align: center;"><h3>Colour</h3></div>
-      <div class = "col-lg-4" style=" text-align: center;">
-        <button type="button" class="btn">Black</button>
-        <button type="button" class="btn">White</button>
-      </div>
-      <div class = "col-lg-2"></div>
-    </div>
-    <br>
-    <div class = "row">
-      <div class = "col-lg-2"></div>
-      <div class = "col-lg-4" style=" text-align: center;"><h3>Move time limit</h3></div>
-      <div class = "col-lg-4" style=" text-align: center;">
-        <button type="button" class="btn">60 seconds</button>
-        <button type="button" class="btn">90 seconds</button>
-        <button type="button" class="btn">120 seconds</button>
-      </div>
-      <div class = "col-lg-2"></div>
-    </div>
-    <br>
-    <div class = "row">
-      <div class = "col-lg-2"></div>
-      <div class = "col-lg-4" style=" text-align: center;"><h3>Handicap</h3></div>
-      <div class = "col-lg-4" style=" text-align: center;">
-        <form>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">0
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">1
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">2
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">3
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">4
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">5
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">6
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">7
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">8
-    </label>
-    <label class="radio-inline">
-      <input type="radio" name="optradio">9
-    </label>
-  </form>
-      </div>
-    </div>
-    <br>
-    <div class = "row">
-      <div class = "col-lg-4" style=" text-align: center;"></div>
-      <div class = "col-lg-4" style=" text-align: center;">
-        <button type="button" class="btn btn-danger" onclick="window.location.href='../index.html'">Submit</button>
-      </div>
-    </div>
+    </form>
   </head>
 </html>
