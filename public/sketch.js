@@ -76,7 +76,7 @@ function libertyBFS(seen, x, y, colour) {
 	} else {
 
 		var result = [];
-		var newSeen = [];	
+		var newSeen = [];
 		var notSeenLiberties = [];
 
 		for (var i = 0; i < seen.length; i++) { // Initialising the new list of seen stones with current seen
@@ -94,7 +94,7 @@ function libertyBFS(seen, x, y, colour) {
 			return seen;
 		}
 
-		for (var i = 0; i < notSeenLiberties.length; i++) { 
+		for (var i = 0; i < notSeenLiberties.length; i++) {
 			var lib = notSeenLiberties[i];
 			var curr_result = libertyBFS(newSeen, lib[0], lib[1], colour);
 			for (var j = 0; j < curr_result.length; j++) {
@@ -158,8 +158,13 @@ function addAndCheck(stoneX, stoneY){
 							curr_stone = board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]];
 							if (curr_stone.colour != newStone.colour) {
 								board.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
+								if (turn % 2 == 0) {
+									scoreBlack++;
+								} else {
+									scoreWhite++;
+								}
 							}
-						}	
+						}
 					}
 				}
 			}
