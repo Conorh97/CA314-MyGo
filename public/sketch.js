@@ -2,6 +2,7 @@ var turn = 0;
 var cnv;
 var board;
 var socket;
+var myTurn = true;
 
 function setup() {
 	cnv = createCanvas(720, 720);
@@ -45,7 +46,7 @@ function draw() {
 	var x = position[0];
 	var y = position[1];
 	if (x <= 690 && x >= 0 && y <= 690 && y >= 0) {
-		if (!(board.emptyIntersection(x,y))){
+		if (!myTurn || !(board.emptyIntersection(x,y))){
 			fill(204,0,0);
 		} else{
 			fill(102,204,0);
@@ -105,26 +106,30 @@ function libertyBFS(seen, x, y, colour) {
 }
 
 function mouseClicked(){
+	if(myTurn) {
+	  var position = closestIntersection();
+		var stoneX = position[0];
+		var stoneY = position[1];
 
-  var position = closestIntersection();
-	var stoneX = position[0];
-	var stoneY = position[1];
+		var data = {
+			x: stoneX,
+			y: stoneY,
+			t: true
+		}
 
-	console.log("sending: " + stoneX + "," + stoneY);
+		console.log("sending: " + stoneX + "," + stoneY);
 
-	var data = {
-		x: stoneX,
-		y: stoneY
+		myTurn = false;
+		socket.emit('stoneXY', data);
+
+		addAndCheck(stoneX,stoneY);
 	}
-	socket.emit('stoneXY', data);
-
-	addAndCheck(stoneX,stoneY);
-
 }
 
 function newMouseClicked(data){
 	var stoneX = data.x;
 	var stoneY = data.y;
+	myTurn = data.t;
 
 	console.log("received: " + stoneX + "," + stoneY);
 
