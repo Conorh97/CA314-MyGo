@@ -36,6 +36,8 @@ function draw() {
 	}
 	
 	board.display();
+	document.getElementById("insertBlackScore").innerHTML = scoreBlack;
+	document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
 
 	// green pointer if empty, red pointer if occupied
 	var position = closestIntersection();
@@ -69,6 +71,8 @@ function mouseClicked(){
 		socket.emit('stoneXY', data);
 
 		board.addAndCheck(stoneX,stoneY);
+		document.getElementById("insertBlackScore").innerHTML = scoreBlack;
+		document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
 	}
 }
 
@@ -80,6 +84,8 @@ function newMouseClicked(data){
 	console.log("received: " + stoneX + "," + stoneY);
 
 	board.addAndCheck(stoneX, stoneY);
+	document.getElementById("insertBlackScore").innerHTML = scoreBlack;
+	document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
 }
 
 

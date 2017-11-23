@@ -57,9 +57,9 @@ class Board {
 								if (curr_stone.colour != newStone.colour) {
 									this.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
 									if (turn % 2 == 0) {
-										scoreBlack++;
+										scoreBlack += 2;
 									} else {
-										scoreWhite++;
+										scoreWhite += 2;
 									}
 								}
 							}
