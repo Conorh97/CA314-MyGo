@@ -1,34 +1,36 @@
 var stones = []
-class Stone{
-  constructor(x,y,turn){
+class Stone {
+  constructor (x, y, turn) {
     this.x = x;
     this.y = y;
-    if(turn % 2 == 0){
+    if (turn % 2 == 0) {
   		this.colour = 1;
-  	}else{
+  	} else {
   		this.colour = 0;
   	}
 
     this.getLiberties();
   }
-  display(){
-    if(this.colour == 1){
+
+  display() {
+    if (this.colour == 1) {
 			fill(0);
-		} else{
+		} else {
 			fill(255);
 		}
-		ellipse(this.x, this.y, board.spacing/2, board.spacing/2);
+		ellipse(this.x, this.y, board.spacing / 2, board.spacing / 2);
   }
-  getGridX(){
+
+  getGridX() {
     return Math.round((this.x - board.padding) / board.spacing);
   }
-  getGridY(){
+  getGridY() {
     return Math.round((this.y - board.padding) / board.spacing);
   }
-  getBoardEnd(){
+  getBoardEnd() {
     return board.padding + board.boardSize;
   }
-  getLiberties(){
+  getLiberties() {
   	if (this.x == this.getBoardEnd() && this.y == this.getBoardEnd()) {
   		this.liberties = [[this.x - board.spacing, this.y], [this.x , this.y - board.spacing]];
   	} else if (this.x == this.getBoardEnd() && this.y == board.padding) {
