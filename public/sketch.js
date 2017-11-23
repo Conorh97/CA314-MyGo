@@ -118,26 +118,7 @@ function mouseClicked(){
 	}
 	socket.emit('stoneXY', data);
 
-	// adds the stone if the chosen intersection isnt occupied.
-	if (board.emptyIntersection(stoneX, stoneY)){
-		newStone = new Stone(stoneX,stoneY,turn);
-		board.addStone(newStone);
-		// For each new stone, we check its liberties for a stone of opposite colour.
-		// If one exists, we check if if should be taken
-		for (i = 0; i < newStone.liberties.length; i++) {
-			curr_lib = newStone.liberties[i];
-			grid_spot = board.grid[curr_lib[0]][curr_lib[1]]; // The value at the current liberties coordinates
-			if (grid_spot != 0) {
-				if (grid_spot.colour != newStone.colour) {
-					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
-						console.log("take");
-						board.grid[curr_lib[0]][curr_lib[1]] = 0;
-					}
-				}
-			}
-		}
-		turn += 1;
-	}
+	addAndCheck(stoneX,stoneY);
 
 }
 
@@ -147,7 +128,11 @@ function newMouseClicked(data){
 
 	console.log("received: " + stoneX + "," + stoneY);
 
-	// adds the stone if the chosen intersection isnt occupied.
+	addAndCheck(stoneX, stoneY);
+
+}
+
+function addAndCheck(stoneX, stoneY){
 	if (board.emptyIntersection(stoneX, stoneY)){
 		newStone = new Stone(stoneX,stoneY,turn);
 		board.addStone(newStone);
@@ -161,13 +146,13 @@ function newMouseClicked(data){
 					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
 						console.log("take");
 						board.grid[curr_lib[0]][curr_lib[1]] = 0;
+						success = true;
 					}
 				}
 			}
 		}
 		turn += 1;
 	}
-
 }
 
 function closestIntersection(){

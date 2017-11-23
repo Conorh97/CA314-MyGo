@@ -3,22 +3,17 @@ var cnv;
 var board;
 var alerty = true;
 var success = false;
+var tut;
+var tut1;
 
 function setup() {
 	cnv = createCanvas(720, 720);
 	cnv.parent('canvas');
 	board = new Board(640, 9, 40);
+	tut = new Tutorial(board);
   console.log(board.grid);
-  board.grid = [[new Stone(calcPos(0),calcPos(0),1),0,0,0,0,0,0,0,0,0],
-                [new Stone(calcPos(1),calcPos(0),2),0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],
-                [0,0,0,0,0,0,0,0,0,0],]
+  tut1 = tut.tutorial1Setup();
+	board.grid = tut1[1];
   console.log(board.grid);
 }
 
@@ -55,7 +50,7 @@ function draw() {
 		//placedStones[i].display();
 	}
   if (alerty){
-    alert("A black stone at (0,1) will take the white stone. Try it now!");
+    alert(tut1[0]);
     alerty = false;
   }
   if (success){
@@ -142,26 +137,7 @@ function mouseClicked(){
 
 	// adds the stone if the chosen intersection isnt occupied.
   if (turn < 1){
-  	if (board.emptyIntersection(stoneX, stoneY)){
-  		newStone = new Stone(stoneX,stoneY,turn);
-  		board.addStone(newStone);
-  		// For each new stone, we check its liberties for a stone of opposite colour.
-  		// If one exists, we check if if should be taken
-  		for (i = 0; i < newStone.liberties.length; i++) {
-  			curr_lib = newStone.liberties[i];
-  			grid_spot = board.grid[curr_lib[0]][curr_lib[1]]; // The value at the current liberties coordinates
-  			if (grid_spot != 0) {
-  				if (grid_spot.colour != newStone.colour) {
-  					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
-  						console.log("take");
-  						board.grid[curr_lib[0]][curr_lib[1]] = 0;
-              success = true;
-  					}
-  				}
-  			}
-  		}
-  		turn += 1;
-  	}
+  	addAndCheck(stoneX,stoneY);
   } else {
     alert("Try Again");
     location.reload();
@@ -169,13 +145,7 @@ function mouseClicked(){
 
 }
 
-function newMouseClicked(data){
-	var stoneX = data.x;
-	var stoneY = data.y;
-
-	console.log("received: " + stoneX + "," + stoneY);
-
-	// adds the stone if the chosen intersection isnt occupied.
+function addAndCheck(stoneX, stoneY){
 	if (board.emptyIntersection(stoneX, stoneY)){
 		newStone = new Stone(stoneX,stoneY,turn);
 		board.addStone(newStone);
@@ -189,12 +159,22 @@ function newMouseClicked(data){
 					if (libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour) == 0) {
 						console.log("take");
 						board.grid[curr_lib[0]][curr_lib[1]] = 0;
+						success = true;
 					}
 				}
 			}
 		}
 		turn += 1;
 	}
+}
+
+function newMouseClicked(data){
+	var stoneX = data.x;
+	var stoneY = data.y;
+
+	console.log("received: " + stoneX + "," + stoneY);
+
+	addAndCheck(stoneX,stoneY);
 
 }
 
