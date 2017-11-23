@@ -3,6 +3,8 @@ var cnv;
 var board;
 var socket;
 var myTurn = true;
+var scoreBlack = 0;
+var scoreWhite = 0;
 
 function setup() {
 	cnv = createCanvas(720, 720);
