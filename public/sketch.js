@@ -14,27 +14,18 @@ function setup() {
 	socket.on('stoneXY', newMouseClicked);
 }
 
-function makeGrid() {
-	for (i = 0; i < board.blocks + 1; i++) {
-		curr_row = [];
-		for (j = 0; j < board.blocks + 1; j++) {
-			curr_row.push(0);
-		}
-		board.grid.push(curr_row);
-	}
-}
-
 function draw() {
 	background(0);
 	fill(205,175,149);
 	stroke(139,119,101);
+	strokeWeight(2);
 	// initialises the empty board with size blocks * blocks.
 	for (x = 0; x < board.blocks; x++) {
 		for (y=0; y < board.blocks; y++) {
 			rect(x * board.spacing + board.padding, y * board.spacing + board.padding, board.spacing, board.spacing);
 		}
 	}
-	
+
 	board.display();
 	document.getElementById("insertBlackScore").innerHTML = scoreBlack;
 	document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
@@ -45,7 +36,7 @@ function draw() {
 	var y = position[1];
 	if (x <= 690 && x >= 0 && y <= 690 && y >= 0) {
 		if (!myTurn || !(board.emptyIntersection(x,y))) {
-			fill(204,0,0); 
+			fill(204,0,0);
 		} else {
 			fill(102,204,0);
 		}
