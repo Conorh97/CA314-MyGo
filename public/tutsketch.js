@@ -45,7 +45,7 @@ function draw() {
     alerty = false;
   }
   if (success){
-    alert("Great Job You Mug!");
+    alert("Well Done!");
 		location.href = "tutorialhome.html";
     success = false;
   }
