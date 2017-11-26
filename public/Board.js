@@ -42,6 +42,11 @@ class Board {
 		if (this.emptyIntersection(stoneX, stoneY)){
 			var newStone = new Stone(stoneX,stoneY,turn);
 			this.addStone(newStone);
+			if (turn % 2 == 0) {
+				scoreBlack++;
+			} else {
+				scoreWhite++;
+			}
 			// For each new stone, we check its liberties for a stone of opposite colour.
 			// If one exists, we check if if should be taken
 			for (var i = 0; i < newStone.liberties.length; i++) {
@@ -58,8 +63,10 @@ class Board {
 									this.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
 									if (turn % 2 == 0) {
 										scoreBlack += 2;
+										scoreWhite--;
 									} else {
 										scoreWhite += 2;
+										scoreBlack--;
 									}
 								}
 							}

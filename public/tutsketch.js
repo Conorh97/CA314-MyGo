@@ -45,7 +45,11 @@ function draw() {
     alerty = false;
   }
   if (success){
+<<<<<<< HEAD
     alert("Great Job!");
+=======
+    alert("Well Done!");
+>>>>>>> 76774f38d3b501ee67d4ed48ecfa7490c5a067ac
 		location.href = "tutorialhome.html";
     success = false;
   }
