@@ -1,3 +1,6 @@
+// assigned for use in tutorial when score is not necessary
+var scoreWhite;
+var scoreBlack;
 class Board {
 	constructor (bS, b, p) {
 		this.boardSize = bS;

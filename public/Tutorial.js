@@ -19,7 +19,7 @@ class Tutorial {
                   [0,0,0,0,0,0,0,0,0,0],];
     return [hint, grid];
   }
-  
+
   tutorial2Setup() {
     this.inProgress = 2;
     var hint = "Place a black stone at (5,3) to take multiple white stones. Try it now!";
