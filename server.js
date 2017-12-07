@@ -15,15 +15,16 @@ function newConnection(socket) {
 
   console.log("new connection: " + socket.id);
   socket.on('stoneXY', stoneMsg);
-  socket.on('setTrue', trueMsg);
+  socket.on('skip', turnMsg);
 
   function stoneMsg(data) {
     socket.broadcast.emit('stoneXY', data);
     console.log(data);
   }
 
-  function trueMsg(bool) {
-    socket.broadcast.emit('setTrue', bool);
+  function turnMsg(data) {
+    socket.broadcast.emit('skip', data);
+    console.log(data);
   }
 
 }

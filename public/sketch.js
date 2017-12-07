@@ -5,6 +5,7 @@ var socket;
 var myTurn = true;
 var scoreBlack = 0;
 var scoreWhite = 0;
+var skipCount = 0;
 
 function setup() {
 	cnv = createCanvas(720, 720);
@@ -12,6 +13,7 @@ function setup() {
 	board = new Board(640, 9, 40);
 	socket = io.connect('http://localhost:3000');
 	socket.on('stoneXY', newMouseClicked);
+	socket.on('skip', opSkip)
 }
 
 function draw() {
@@ -56,9 +58,8 @@ function mouseClicked(){
 			t: true
 		}
 
-		console.log("sending: " + stoneX + "," + stoneY);
-
 		if(board.emptyIntersection(stoneX, stoneY)){
+			console.log("sending: " + stoneX + "," + stoneY);
 			myTurn = false;
 			socket.emit('stoneXY', data);
 		}
@@ -104,4 +105,38 @@ function closestIntersection(){
 		y += board.padding;
 	}
 	return [x,y];
+}
+
+function skipTurn() {
+	if (myTurn) {
+
+		if (skipCount == 1) {
+			endGame();
+		}
+
+		myTurn = false;
+
+		var data = {
+			t: true
+		}
+
+		turn++;
+		skipCount++;
+		console.log("Turn Skipped");
+		socket.emit('skip', data);
+	} else {
+		alert("It isn't your turn.")
+	}
+}
+
+function opSkip(data) {
+	alert("Your opponent skipped their turn.")
+	skipCount++;
+	console.log("Opponent Skipped");
+	myTurn = data.t;
+	turn++;
+}
+
+function endGame(){
+	alert("GG");
 }
