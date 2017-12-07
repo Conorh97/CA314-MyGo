@@ -58,8 +58,11 @@ function mouseClicked(){
 
 		console.log("sending: " + stoneX + "," + stoneY);
 
-		myTurn = false;
-		socket.emit('stoneXY', data);
+		if(board.emptyIntersection(stoneX, stoneY)){
+			myTurn = false;
+			socket.emit('stoneXY', data);
+		}
+
 
 		board.addAndCheck(stoneX,stoneY);
 		document.getElementById("insertBlackScore").innerHTML = scoreBlack;
