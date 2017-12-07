@@ -59,8 +59,8 @@ class Board {
 					if (grid_spot.colour != newStone.colour) {
 						var current_bfs = this.libertyBFS([[curr_lib[0], curr_lib[1]]], curr_lib[0], curr_lib[1], newStone.colour);
 						if (this.isArrayInArray(current_bfs, [-1, -1]) == false) { // Determines if the liberties are surrounded
-							for (var i = 0; i < current_bfs.length; i++) {
-								var curr_bfs_lib = current_bfs[i];
+							for (var j = 0; j < current_bfs.length; j++) {
+								var curr_bfs_lib = current_bfs[j];
 								var curr_stone = this.grid[curr_bfs_lib[0]][curr_bfs_lib[1]];
 								if (curr_stone.colour != newStone.colour) {
 									this.grid[curr_bfs_lib[0]][curr_bfs_lib[1]] = 0;
