@@ -38,6 +38,8 @@ node server.js
 
 	*	A player quits the game.
 
--	Our full site can be found [here](http://student.computing.dcu.ie/~hanlonc5/CA314-MyGo/public/website/login.html)
+-	Our full site can be found [here.](http://student.computing.dcu.ie/~hanlonc5/CA314-MyGo/public/website/login.html)
+
+-	Tutorial mode can be accessed through the tutorial site or at this [link.](http://student.computing.dcu.ie/~hanlonc5/CA314-MyGo/public/website/tutorialhome.html)
 
 -	Enjoy!
