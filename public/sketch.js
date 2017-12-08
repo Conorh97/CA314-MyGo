@@ -13,7 +13,8 @@ function setup() {
 	board = new Board(640, 9, 40);
 	socket = io.connect('http://localhost:3000');
 	socket.on('stoneXY', newMouseClicked);
-	socket.on('skip', opSkip)
+	socket.on('skip', opSkip);
+	socket.on('end', opEndGame);
 }
 
 function draw() {
@@ -48,7 +49,7 @@ function draw() {
 
 function mouseClicked(){
 	if (myTurn) {
-	  	var position = closestIntersection();
+	  var position = closestIntersection();
 		var stoneX = position[0];
 		var stoneY = position[1];
 
@@ -61,13 +62,17 @@ function mouseClicked(){
 		if(board.emptyIntersection(stoneX, stoneY)){
 			console.log("sending: " + stoneX + "," + stoneY);
 			myTurn = false;
+			skipCount = 0;
 			socket.emit('stoneXY', data);
 		}
-
 
 		board.addAndCheck(stoneX,stoneY);
 		document.getElementById("insertBlackScore").innerHTML = scoreBlack;
 		document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
+
+		if (scoreBlack >= 100 || scoreWhite >= 100) {
+			endGame(1);
+		}
 	}
 }
 
@@ -75,12 +80,17 @@ function newMouseClicked(data){
 	var stoneX = data.x;
 	var stoneY = data.y;
 	myTurn = data.t;
+	skipCount = 0;
 
 	console.log("received: " + stoneX + "," + stoneY);
 
 	board.addAndCheck(stoneX, stoneY);
 	document.getElementById("insertBlackScore").innerHTML = scoreBlack;
 	document.getElementById("insertWhiteScore").innerHTML = scoreWhite;
+
+	if (scoreBlack >= 100 || scoreWhite >= 100) {
+		endGame(1);
+	}
 }
 
 
@@ -109,34 +119,65 @@ function closestIntersection(){
 
 function skipTurn() {
 	if (myTurn) {
-
-		if (skipCount == 1) {
-			endGame();
-		}
-
-		myTurn = false;
-
-		var data = {
-			t: true
-		}
-
 		turn++;
 		skipCount++;
-		console.log("Turn Skipped");
-		socket.emit('skip', data);
+
+		if (skipCount == 2) {
+			endGame(2);
+		}	else {
+			myTurn = false;
+
+			var data = {
+				t: true
+			}
+
+			console.log("Turn Skipped");
+			socket.emit('skip', data);
+		}
 	} else {
 		alert("It isn't your turn.")
 	}
 }
 
 function opSkip(data) {
-	alert("Your opponent skipped their turn.")
 	skipCount++;
-	console.log("Opponent Skipped");
-	myTurn = data.t;
-	turn++;
+	if (skipCount < 2) {
+		console.log(skipCount);
+		alert("Your opponent skipped their turn.")
+		myTurn = data.t;
+		turn++;
+	}
 }
 
-function endGame(){
-	alert("GG");
+function endGame(message) {
+	var score = "Black   " + scoreBlack + " : " + scoreWhite + "   White"
+
+	if (scoreBlack > scoreWhite) {
+		var winner = "Black wins.";
+	} else if (scoreBlack < scoreWhite) {
+		var winner = "White wins.";
+	} else {
+		var winner = "Draw.";
+	}
+
+	if (message == 0) {
+		alert("You have quit!");
+		var msg = "Your opponent has quit!";
+		socket.emit('end', msg);
+	}	else if (message == 1) {
+		alert("Score limit reached!" + "\n\n" + score + "\n" + winner);
+	}	else if (message == 2) {
+		var msg = "Game Over. Two consecutive skips were made." + "\n\n" + score + "\n" + winner
+		alert(msg);
+		socket.emit('end', msg);
+	}
+
+	console.log("endgame");
+
+	location.href = "website/selectmode.html";
+}
+
+function opEndGame(msg) {
+	alert(msg);
+	location.href = "website/selectmode.html";
 }

@@ -16,6 +16,7 @@ function newConnection(socket) {
   console.log("new connection: " + socket.id);
   socket.on('stoneXY', stoneMsg);
   socket.on('skip', turnMsg);
+  socket.on('end', endMsg);
 
   function stoneMsg(data) {
     socket.broadcast.emit('stoneXY', data);
@@ -25,6 +26,11 @@ function newConnection(socket) {
   function turnMsg(data) {
     socket.broadcast.emit('skip', data);
     console.log(data);
+  }
+
+  function endMsg(msg) {
+    socket.broadcast.emit('end', msg);
+    console.log("Game has ended");
   }
 
 }
