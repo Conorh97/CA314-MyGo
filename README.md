@@ -38,4 +38,6 @@ node server.js
 
 	*	A player quits the game.
 
+-	Our full site can be found [here](http://student.computing.dcu.ie/~hanlonc5/CA314-MyGo/public/website/login.html)
+
 -	Enjoy!
