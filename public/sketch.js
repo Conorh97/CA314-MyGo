@@ -165,9 +165,9 @@ function endGame(message) {
 		var msg = "Your opponent has quit!";
 		socket.emit('end', msg);
 	}	else if (message == 1) {
-		alert("Score limit reached!" + "\n\n" + score + "\n" + winner);
+		alert("Score limit reached!" + "\n\n\t\t" + score + "\n\n\t\t\t" + winner);
 	}	else if (message == 2) {
-		var msg = "Game Over. Two consecutive skips were made." + "\n\n" + score + "\n" + winner
+		var msg = "Game Over. Two consecutive skips were made." + "\n\n\t\t" + score + "\n\n\t\t\t" + winner
 		alert(msg);
 		socket.emit('end', msg);
 	}
